@@ -1,0 +1,61 @@
+.wrapper {
+  background-color: #fff;
+  width: 60rem;
+  height: 35rem;
+  min-width: 50rem;
+  min-height: 30rem;
+  max-height: 35rem;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  border-radius: 5px;
+
+}
+
+.wrapper__left, .wrapper__right {
+  width: 50%;
+  height: 100%;
+  position: relative;
+}
+
+.wrapper__left .wrapper_img {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wrapper__right {
+  padding: 4rem 3rem;
+}
+
+.wrapper__right .form {
+  background-color: white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  /* box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px; */
+  padding: 4rem 3rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.text-notification {
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.text-notification--success{
+  color: #39BD5A;
+}
+
+.text-notification--error{
+  color: #F83D34;
+}

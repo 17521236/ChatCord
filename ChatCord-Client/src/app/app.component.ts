@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { fromEvent, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',

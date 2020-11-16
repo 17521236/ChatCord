@@ -1,0 +1,33 @@
+.body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.not-found {
+  background-image: url('../../../assets/404.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vh;
+  height: 100vh;
+}
+
+.back-home {
+  cursor: pointer;
+  position: absolute;
+  left: 5vh;
+  top: 43%;
+  /* transform: translateY(-50%); */
+}
+
+.big-size {
+  font-size: 13vh;
+}
+
+.body>.title {
+  text-align: center;
+  top: 15%;
+}

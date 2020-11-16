@@ -1,0 +1,52 @@
+<div class="wrapper container p-0 d-flex">
+
+
+  <!-- user-->
+  <div class="users">
+    <div class="header">Users in Room</div>
+    <div *ngFor="let user of room.users" class="user">
+      <div class="user__name">{{user?.username}}</div>
+    </div>
+  </div>
+  <!-- end  user-->
+
+  <!-- chat container -->
+  <div class="chat-container">
+
+    <!-- room -->
+    <div class="room">
+      <div class="room__name font-weight-bold text-center mt-3">Room: {{room?.room}}</div>
+      <div class="room__des text-center "> {{room?.users.length}} people online</div>
+    </div>
+    <!-- end room-->
+
+    <!-- all message -->
+    <div class="messages">
+      <div *ngFor="let msg of allMsg; index as i">
+        <!-- padding if change user -->
+        <div *ngIf="allMsg[i-1]?.username != msg.username" class="p-2"></div>
+        <div class="message" [class]="msg.isMine?'is-mine':'is-another'">
+          <div *ngIf="allMsg[i-1]?.username != msg.username" class="message-header"
+            [class]="msg.isMine?' text-white':''">
+            <span class="message-header__username">{{ msg.username !='* Bot *'? msg.username:'ChatCord'}}</span>
+            <span *ngIf="msg.username==='* Bot *'" class="message-header__bot">
+              <i class='bx bx-check'></i>
+              Bot
+            </span>
+            <span class="message-header__time"> {{msg.time}}</span>
+          </div>
+          <div class="message-content"> {{msg.message}}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- input -->
+    <form class="chat__input" [formGroup]="formMsg">
+      <input formControlName="message" class="form-control" placeholder="Enter your message..."
+        (keydown)="sendMessage($event)">
+    </form>
+    <!-- end input -->
+
+  </div>
+  <!-- end  chat messages -->
+</div>
