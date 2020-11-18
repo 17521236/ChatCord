@@ -1,11 +1,12 @@
-<div class="wrapper container p-0 d-flex">
+<div class="wrapper">
 
 
   <!-- user-->
   <div class="users">
     <div class="header">Users in Room</div>
     <div *ngFor="let user of room.users" class="user">
-      <div class="user__name">{{user?.username}}</div>
+      <span class="user__avatar" [style.background-image]="'url('+SERVER_URL+'/'+user.avatarUrl+')'"></span>
+      <span class="user__name">{{user?.username}}</span>
     </div>
   </div>
   <!-- end  user-->
@@ -17,33 +18,54 @@
     <div class="room">
       <div class="room__name font-weight-bold text-center mt-3">Room: {{room?.room}}</div>
       <div class="room__des text-center "> {{room?.users.length}} people online</div>
+      <span class="room__logout" (click)="logout()">
+        <!-- <i class='bx bx-log-out-circle'></i> -->
+        <i class='bx bx-log-out'></i>
+      </span>
     </div>
     <!-- end room-->
 
     <!-- all message -->
     <div class="messages">
-      <div *ngFor="let msg of allMsg; index as i">
-        <!-- padding if change user -->
-        <div *ngIf="allMsg[i-1]?.username != msg.username" class="p-2"></div>
-        <div class="message" [class]="msg.isMine?'is-mine':'is-another'">
+      <div class="item-message"
+      *ngFor="let msg of allMsg; index as i"
+      [class]="msg.isMine?' is-mine':' is-another'"
+      [style.margin-top.rem]="allMsg[i-1]?.username !== msg.username ? 1 : 0.5"
+      >
+        <!-- avatar -->
+        <div [class]="allMsg[i-1]?.username !== msg.username?'item-message__avatar':'m-avatar'"
+        [style.background-image]="allMsg[i-1]?.username !== msg.username ? 'url('+SERVER_URL+'/'+msg.avatarUrl+')' : ''"
+        ></div>
+        <!-- message -->
+        <div class="message">
           <div *ngIf="allMsg[i-1]?.username != msg.username" class="message-header"
             [class]="msg.isMine?' text-white':''">
+            <!-- username -->
             <span class="message-header__username">{{ msg.username !='* Bot *'? msg.username:'ChatCord'}}</span>
             <span *ngIf="msg.username==='* Bot *'" class="message-header__bot">
               <i class='bx bx-check'></i>
               Bot
             </span>
+            <!-- end username -->
+            <!-- time -->
             <span class="message-header__time"> {{msg.time}}</span>
+            <!-- end time -->
           </div>
+          <!-- content -->
           <div class="message-content"> {{msg.message}}</div>
+          <!-- end content -->
         </div>
       </div>
+
     </div>
 
     <!-- input -->
-    <form class="chat__input" [formGroup]="formMsg">
-      <input formControlName="message" class="form-control" placeholder="Enter your message..."
-        (keydown)="sendMessage($event)">
+    <form class="chat__input" [formGroup]="formMsg" (ngSubmit)="sendMessage()">
+      <input formControlName="message" class="form-control" placeholder="Enter your message...">
+      <div class="d-flex justify-content-center align-items-center btn-send" (click)="sendMessage()">
+        <i class='bx bxs-send'></i>
+      </div>
+      <button type="submit" hidden></button>
     </form>
     <!-- end input -->
 

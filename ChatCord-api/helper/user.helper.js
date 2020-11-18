@@ -1,7 +1,7 @@
 var users = [];
 
-function userJoin(userId, username, room) {
-    user = { userId, username, room };
+function addUser(userId, username, room, avatarUrl) {
+    user = { userId, username, room, avatarUrl };
     users.push(user);
 }
 
@@ -18,10 +18,15 @@ function deletePeopleById(userId) {
     users = users.filter(x => x.userId != userId);
 }
 
+function isExisted(username) {
+    return existed = !(users.every(x => x.username !== username));
+}
+
 module.exports = {
-    userJoin,
+    addUser,
     getUserById,
     getUsers,
-    deletePeopleById
+    deletePeopleById,
+    isExisted
 }
 

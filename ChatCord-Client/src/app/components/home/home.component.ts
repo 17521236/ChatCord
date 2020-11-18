@@ -1,41 +1,48 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { IMessageFromServer, IRoomInfo } from 'src/app/models/message.model';
-import { SocketIoService } from 'src/app/services/socket-io.service';
+import { Component, Injector, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { IMessageFromServer, IRoomInfo, IUser } from 'src/app/models/message.model';
+import { environment } from 'src/environments/environment';
+import { AppComponentBase } from 'src/shared/common/AppComponentBase/AppComponentBase.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css', '../login/login.component.css']
+  styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent extends AppComponentBase implements OnInit {
 
+  SERVER_URL = environment.SOCKET_ENDPOINT;
   formMsg: FormGroup;
   allMsg: IMessageFromServer[] = [];
   room: IRoomInfo = { room: '', users: [] };
 
-  constructor(private socketIoServer: SocketIoService, private fb: FormBuilder, private router: Router) {
+
+  constructor(private injector: Injector) {
+    super(injector);
+
+    if (!this.socketIoService.testConnect()) {
+      this.logout();
+    }
     this.formMsg = this.fb.group({
       message: ''
     });
   }
 
   ngOnInit(): void {
+    this.listenUserLogout()
     this.listenMessageFromServer();
     this.listenAnotherPeopleJoin();
   }
 
   listenAnotherPeopleJoin(): void {
-    this.socketIoServer.listenEvent('server-response-login').subscribe((res: IRoomInfo) => {
+    this.socketIoService.listenEvent('server-response-login').subscribe((res: IRoomInfo) => {
       this.room = res;
-      console.log('users: ',res);
     });
   }
 
   listenMessageFromServer(): void {
-    this.socketIoServer.listenEvent('server-response-send-message').subscribe((res: IMessageFromServer) => {
+    this.socketIoService.listenEvent('server-response-send-message').subscribe((res: IMessageFromServer) => {
       this.allMsg.push(res);
       // reset input filed
       setTimeout(() => this.scrollDown(), 30);
@@ -43,19 +50,30 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  sendMessage($event): void {
+  listenUserLogout(): void {
+    this.socketIoService.listenEvent('server-response-user-logout').subscribe(() => this.logout());
+  }
+
+
+  // action in component
+  sendMessage(): void {
     const myMsg = this.formMsg.controls.message.value;
-    if (!myMsg || myMsg === '' || $event.keyCode !== 13) {
+    if (!myMsg || myMsg === '') {
       return;
     }
 
     // send to server
-    this.socketIoServer.sendData('client-send-message', myMsg);
+    this.socketIoService.sendData('client-send-message', myMsg);
   }
 
   scrollDown(): void {
     const element = document.querySelector('.messages');
     element.scrollTop = element.scrollHeight;
+  }
+
+  logout(): void {
+    this.router.navigate(['/login']);
+    this.socketIoService.sendData('client-user-logout', '');
   }
 }
 

@@ -1,0 +1,19 @@
+<div class="message" [class]="messageService.isShow?' message--show':''" [style.opacity]="messageService.isShow?1:0">
+  <div class="message__header">
+    <div class="header-title" [ngSwitch]="messageService.messageType">
+      <div class="header-title--success" *ngSwitchCase="0">
+        <i class='bx bxs-chevron-down-circle'></i>Success
+      </div>
+      <div class="header-title--danger" *ngSwitchCase="1">
+        <i class='bx bxs-error-circle'></i>Danger
+      </div>
+      <div class="header-title--info" *ngSwitchCase="2">
+        <i class='bx bxs-info-circle'></i>Information
+      </div>
+    </div>
+    <div class="header-close" (click)="messageService.hide()"><i class='bx bx-x'></i></div>
+  </div>
+  <div class="message__content">
+    {{messageService.msg}}
+  </div>
+</div>

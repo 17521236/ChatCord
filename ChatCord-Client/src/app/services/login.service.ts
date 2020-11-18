@@ -9,9 +9,9 @@ export class LoginService {
 
   }
 
-  sendMessage(msg: string) {
-    //this.socket.emit("message", msg);
-  }
+ isExisted(){
+
+ }
 
 
 

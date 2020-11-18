@@ -9,8 +9,14 @@ import { environment } from 'src/environments/environment';
 export class SocketIoService {
   socket: any;
 
-  constructor() {
+  constructor() { }
+
+  createConnect(): void {
     this.socket = io(environment.SOCKET_ENDPOINT, { transports: ['websocket'] });
+  }
+
+  testConnect(): boolean {
+    return this.socket ? true : false;
   }
 
   sendData(event: string, data: any): void {

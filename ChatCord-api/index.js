@@ -17,11 +17,14 @@ const io = require('socket.io')(server, {
 });
 
 const moment = require('moment');
-const { userJoin, getUserById, getUsers, deletePeopleById } = require('./helper/user.helper');
+const { addUser, getUserById, getUsers, deletePeopleById, isExisted } = require('./helper/user.helper');
+const { getIcons } = require('./helper/resource.helper');
 
+app.use(express.static('public'));
 //socket code
 io.on('connection', socket => {
-    console.log(socket.id, ' connected');
+    //when connected -> emit list icons to user
+    socket.emit('server-response-icons', getIcons());
 
     //disconnected
     socket.on('disconnect', () => {
@@ -31,6 +34,7 @@ io.on('connection', socket => {
         }
         deletePeopleById(socket.id);
         socket.broadcast.to(user?.room).emit('server-response-send-message', {
+            avatarUrl:'icons/avatar/robot.svg',
             username: '* Bot *',
             message: `${user.username} has left the chat`,
             time: moment().format('LT'),
@@ -45,43 +49,52 @@ io.on('connection', socket => {
 
     //login
     socket.on('client-login', (data) => {
-        //push user to users
-        userJoin(socket.id, data.username, data.room);
-        //get user
-        const user = getUserById(socket.id);
-        if (!user) {
-            return;
+
+        // check duplication
+        if (isExisted(data.username)) {
+            socket.emit('server-response-login-fail', 'Username existed !');
+        } else {
+            socket.emit('server-response-login-success', '');
+            // add user to list users
+            addUser(socket.id, data.username, data.room, data.avatarUrl);
+            //get user
+            const user = getUserById(socket.id);
+            if (!user) return;
+            //join to room
+            socket.join(user.room);
+            // message to other people
+            socket.broadcast.to(user.room).emit('server-response-send-message', {
+                avatarUrl:'icons/avatar/robot.svg',
+                username: '* Bot *',
+                message: `${user.username} has joined room`,
+                time: moment().format('LT'),
+                isMine: false
+            });
+            // message to current socket
+            socket.emit('server-response-send-message', {
+                avatarUrl:'icons/avatar/robot.svg',
+                username: '* Bot *',
+                message: `Welcome ${user.username} !!! Let's send your first message to other people in room`,
+                time: moment().format('LT'),
+                isMine: false
+            });
+            // notification number people in room
+            io.to(user.room).emit('server-response-login', {
+                room: user.room,
+                users: getUsers(user.room)
+            });
         }
-        //join to room
-        socket.join(user.room);
-        // message to other people
-        socket.broadcast.to(user.room).emit('server-response-send-message', {
-            username: '* Bot *',
-            message: `${user.username} has joined room`,
-            time: moment().format('LT'),
-            isMine: false
-        });
-         // message to current socket
-         socket.emit('server-response-send-message', {
-            username: '* Bot *',
-            message: `Welcome ${user.username} !!! Let's send your first message to other people in room`,
-            time: moment().format('LT'),
-            isMine: false
-        });
-        // notification number people in room
-        io.to(user.room).emit('server-response-login', {
-            room: user.room,
-            users: getUsers(user.room)
-        });
     })
 
     // send message
     socket.on('client-send-message', (data) => {
         const user = getUserById(socket.id);
         if (!user) {
+            socket.emit('server-response-user-logout', true);
             return;
         }
         socket.emit('server-response-send-message', {
+            avatarUrl:user.avatarUrl,
             username: user.username,
             message: data,
             time: moment().format('LT'),
@@ -89,15 +102,38 @@ io.on('connection', socket => {
         });
 
         socket.broadcast.to(user.room).emit('server-response-send-message', {
+            avatarUrl:user.avatarUrl,
             username: user.username,
             message: data,
             time: moment().format('LT'),
             isMine: false
         });
     })
+
+    socket.on('client-user-logout', (data) => {
+        deletePeopleById(socket.id);
+    })
 });
 
 
+
+//setting multer
+// const multer = require("multer");
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, './upload')
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.originalname);
+//     }
+// })
+// const upload = multer({ storage });
+
+// //post upload
+// app.post("/upload", upload.single("file"), function (req, res) {
+//     console.log(req.file);
+//     res.send("upload success");
+// })
 
 // connection
 server.listen(port, () => {

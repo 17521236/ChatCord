@@ -1,4 +1,4 @@
-<div class="wrapper container p-0 d-flex">
+<div class="wrapper">
   <div class="wrapper__left pl-4" style="background-color: #fafafa;">
     <img class="wrapper_img" src="../assets/login.jpg" alt="no img">
   </div>
@@ -8,8 +8,16 @@
 
       <div class="row">
         <div class="col-12">
+          <div class="form-group sign-in">
+            <h2 class="display-5 text-center font-weight-bold">Sign In Now</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
           <div class="form-group">
-            <h2 class="display-5 text-center mb-5 font-weight-bold">Sign In Now</h2>
+            <div class="avatar mx-auto" (click)="showModalAvatar()" [style.background-image]="'url('+SERVER_URL+'/'+formGroup.controls['avatarUrl'].value+')'"></div>
           </div>
         </div>
       </div>
@@ -23,7 +31,7 @@
             <div class="text-notification text-notification--error"
               *ngIf="formGroup.controls['username'].invalid && formGroup.controls['username'].touched">
               <span *ngIf="formGroup.controls['username'].errors.required">* Username is required</span>
-              <span *ngIf="formGroup.controls['username'].errors.minlength">* Username is must be 6 - 32
+              <span *ngIf="formGroup.controls['username'].errors.minlength || formGroup.controls['username'].errors.maxlength">* Username is must be 6 - 20
                 character</span>
               <span *ngIf="formGroup.controls['username'].errors.onlyWhitespace
               && !formGroup.controls['username'].errors.minlength
@@ -55,5 +63,26 @@
       </div>
     </form>
   </div>
-
+</div>
+<!-- Modal -->
+<div class="modal" tabindex="-1" #modal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Choose your avatar</h5>
+        <button type="button" class="close" (click)="hideModalAvatar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-3 col-md-2" *ngFor="let icon of icons">
+              <div class="icon-item" [style.background-image]="'url('+SERVER_URL+'/'+icon.url+')'" (click)="chooseAvatar(icon.url)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

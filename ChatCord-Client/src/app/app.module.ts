@@ -9,6 +9,9 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { SocketIoService } from './services/socket-io.service';
 import { LoginService } from './services/login.service';
+import { MessageNotificationComponent } from './components/message-notification/message-notification.component';
+import { SharedModule } from 'src/shared/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -16,12 +19,14 @@ import { LoginService } from './services/login.service';
     HomeComponent,
     LoginComponent,
     NotFoundComponent,
+    MessageNotificationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   providers: [SocketIoService, LoginService],
   bootstrap: [AppComponent]
