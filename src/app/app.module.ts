@@ -11,7 +11,7 @@ import { SocketIoService } from './services/socket-io.service';
 import { LoginService } from './services/login.service';
 import { MessageNotificationComponent } from './components/message-notification/message-notification.component';
 import { SharedModule } from 'src/shared/shared.module';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,8 @@ import { SharedModule } from 'src/shared/shared.module';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [SocketIoService, LoginService],
   bootstrap: [AppComponent]

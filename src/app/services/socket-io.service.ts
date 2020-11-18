@@ -12,6 +12,7 @@ export class SocketIoService {
   constructor() { }
 
   createConnect(): void {
+    console.log('try connect to: ',environment.SOCKET_ENDPOINT);
     this.socket = io(environment.SOCKET_ENDPOINT, { transports: ['websocket'] });
   }
 

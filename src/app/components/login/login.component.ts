@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { IIcon } from 'src/app/models/message.model';
@@ -18,7 +19,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   icons: IIcon[] = [];
   isExist = false;
 
-  constructor(private injector: Injector) {
+  constructor(private injector: Injector, private http: HttpClient) {
     super(injector);
 
     this.formGroup = this.fb.group({
