@@ -14,7 +14,8 @@ import { AppComponentBase } from 'src/shared/common/AppComponentBase/AppComponen
 export class LoginComponent extends AppComponentBase implements OnInit {
 
   @ViewChild('modal') modal: ElementRef;
-  SERVER_URL = environment.SOCKET_ENDPOINT;
+  // SERVER_URL = environment.SOCKET_ENDPOINT;
+  SERVER_URL = 'https://chatcord-api.herokuapp.com';
   formGroup: FormGroup;
   icons: IIcon[] = [];
   isExist = false;

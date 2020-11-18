@@ -8,12 +8,12 @@ import { environment } from 'src/environments/environment';
 })
 export class SocketIoService {
   socket: any;
-
+  // SERVER_URL=environment.SOCKET_ENDPOINT;
+  SERVER_URL='https://chatcord-api.herokuapp.com';
   constructor() { }
 
   createConnect(): void {
-    console.log('try connect to: ',environment.SOCKET_ENDPOINT);
-    this.socket = io(environment.SOCKET_ENDPOINT, { transports: ['websocket'] });
+    this.socket = io(this.SERVER_URL, { transports: ['websocket'] });
   }
 
   testConnect(): boolean {

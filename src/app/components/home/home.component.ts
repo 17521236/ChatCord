@@ -12,7 +12,8 @@ import { AppComponentBase } from 'src/shared/common/AppComponentBase/AppComponen
 
 export class HomeComponent extends AppComponentBase implements OnInit {
 
-  SERVER_URL = environment.SOCKET_ENDPOINT;
+  // SERVER_URL = environment.SOCKET_ENDPOINT;
+  SERVER_URL='https://chatcord-api.herokuapp.com';
   formMsg: FormGroup;
   allMsg: IMessageFromServer[] = [];
   room: IRoomInfo = { room: '', users: [] };
