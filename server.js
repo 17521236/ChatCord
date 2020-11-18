@@ -1,14 +1,9 @@
-var express = require("express");
-var app = express();
-
-app.use(express.static('./dist/chatcord'));
-
+const express = require('express');
+const path = require('path');
+const app = express();
+app.use(express.static(__dirname + '/dist/chatcord'));
 app.get('/*', function (req, res) {
-  res.sendFile('index.html', { root: 'dist/chatcord/' }
-  );
+  res.sendFile(path.join(__dirname +
+    '/dist/chatcord/index.html'));
 });
-
-// Initialize the app.
-app.listen(process.env.PORT || 4200, function () {
-  console.log("App now running on port");
-});
+app.listen(process.env.PORT || 8080);
