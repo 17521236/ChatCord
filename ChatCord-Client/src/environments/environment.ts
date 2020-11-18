@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  SOCKET_ENDPOINT:'http://localhost:3000'
+  SOCKET_ENDPOINT: 'https://chat-cord-api.17521236.vercel.app'
+  // SOCKET_ENDPOINT:'http://localhost:3000'
 };
 
 /*

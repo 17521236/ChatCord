@@ -34,7 +34,7 @@ io.on('connection', socket => {
         }
         deletePeopleById(socket.id);
         socket.broadcast.to(user?.room).emit('server-response-send-message', {
-            avatarUrl:'icons/avatar/robot.svg',
+            avatarUrl: 'icons/avatar/robot.svg',
             username: '* Bot *',
             message: `${user.username} has left the chat`,
             time: moment().format('LT'),
@@ -64,7 +64,7 @@ io.on('connection', socket => {
             socket.join(user.room);
             // message to other people
             socket.broadcast.to(user.room).emit('server-response-send-message', {
-                avatarUrl:'icons/avatar/robot.svg',
+                avatarUrl: 'icons/avatar/robot.svg',
                 username: '* Bot *',
                 message: `${user.username} has joined room`,
                 time: moment().format('LT'),
@@ -72,7 +72,7 @@ io.on('connection', socket => {
             });
             // message to current socket
             socket.emit('server-response-send-message', {
-                avatarUrl:'icons/avatar/robot.svg',
+                avatarUrl: 'icons/avatar/robot.svg',
                 username: '* Bot *',
                 message: `Welcome ${user.username} !!! Let's send your first message to other people in room`,
                 time: moment().format('LT'),
@@ -94,7 +94,7 @@ io.on('connection', socket => {
             return;
         }
         socket.emit('server-response-send-message', {
-            avatarUrl:user.avatarUrl,
+            avatarUrl: user.avatarUrl,
             username: user.username,
             message: data,
             time: moment().format('LT'),
@@ -102,7 +102,7 @@ io.on('connection', socket => {
         });
 
         socket.broadcast.to(user.room).emit('server-response-send-message', {
-            avatarUrl:user.avatarUrl,
+            avatarUrl: user.avatarUrl,
             username: user.username,
             message: data,
             time: moment().format('LT'),
@@ -134,6 +134,10 @@ io.on('connection', socket => {
 //     console.log(req.file);
 //     res.send("upload success");
 // })
+
+app.use('/', (req, res) => {
+    console.log('Server ok');
+})
 
 // connection
 server.listen(port, () => {
