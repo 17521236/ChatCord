@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-//   SOCKET_ENDPOINT: 'https://chatcord-api.herokuapp.com'
-   SOCKET_ENDPOINT:'http://localhost:3000'
+   SOCKET_ENDPOINT: 'https://chatcord-api.herokuapp.com'
+// SOCKET_ENDPOINT:'http://localhost:3000'
 };
 
 /*
