@@ -1,130 +1,132 @@
 .wrapper {
-  background-color: #fff;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  overflow: hidden;
-  border-radius: 5px;
+    background-color: #fff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    overflow: hidden;
+    border-radius: 5px;
 }
 
 .wrapper__left .wrapper_img {
-  width: 100%;
+    width: 100%;
 }
 
 .wrapper__right {
-  padding: 4rem 3rem;
+    padding: 4rem 3rem;
 }
 
 .wrapper__right .form {
-  background-color: white;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  padding: 3rem;
+    background-color: white;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 3rem;
 }
 
 .label {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .text-notification {
-  font-size: 0.8rem;
-  margin-top: 0.3rem;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
 }
 
 .text-notification--success {
-  color: #39BD5A;
+    color: #39BD5A;
 }
 
 .text-notification--error {
-  color: #F83D34;
+    color: #F83D34;
 }
 
 .avatar {
-  cursor: pointer;
-  width: 70px;
-  height: 70px;
-  background-image: url('http://localhost:3000/icons/avatar/avatar1000.svg');
-  background-position: center;
-  background-size: cover;
+    cursor: pointer;
+    width: 70px;
+    height: 70px;
+    background-image: url('http://localhost:3000/icons/avatar/avatar1000.svg');
+    background-position: center;
+    background-size: cover;
 }
 
 .modal {
-  background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .modal--show {
-  display: block;
+    display: block;
 }
 
 .modal-body {
-  overflow-y: scroll;
-  max-height: 80vh;
-  margin-bottom: 1rem;
+    overflow-y: scroll;
+    max-height: 80vh;
+    margin-bottom: 1rem;
 }
 
 .icon-item {
-  width: 50px;
-  height: 50px;
-  background-position: center;
-  background-size: cover;
-  background-image: url('http://localhost:3000/icons/avatar/avatar1000.svg');
-  margin-bottom: 1rem;
-  cursor: pointer;
-  transition: transform 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    background-size: cover;
+    background-image: url('http://localhost:3000/icons/avatar/avatar1000.svg');
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: transform 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .icon-item:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
-@media only screen and (max-width:46.1875em) {
-  .wrapper__left {
-    display: none;
-  }
-  .wrapper__right {
-    width: 90vw;
-    padding: 0;
-  }
+@media only screen and (max-width:46.249em) {
+    .wrapper {
+        width: 100%;
+        margin: 1rem;
+    }
+    .wrapper__left {
+        display: none;
+    }
+    .wrapper__right {
+        padding: 0;
+    }
+    .wrapper__right .form {
+        width: 100%;
+    }
 }
 
 @media only screen and (min-width:46.25em) {
-  .wrapper{
-    display: flex;
-  }
-  .wrapper__left {
-    display: flex;
-    width: 40%;
-    align-items: center;
-  }
-  .wrapper__right {
-    width: 60%;
-    display: flex;
-    align-items: center;
-  }
-  .wrapper__right .form{
-    width: 100%;
-  }
-
-  .sign-in{
-    margin-bottom: 2rem;
-  }
+    .wrapper {
+        display: flex;
+    }
+    .wrapper__left {
+        display: flex;
+        width: 40%;
+        align-items: center;
+    }
+    .wrapper__right {
+        width: 60%;
+        display: flex;
+        align-items: center;
+    }
+    .wrapper__right .form {
+        width: 100%;
+    }
+    .sign-in {
+        margin-bottom: 2rem;
+    }
 }
 
 @media only screen and (min-width:64em) {
-  .wrapper{
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .wrapper__left {
-    width: 50%;
-  }
-  .wrapper__right {
-    width: 50%;
-  }
+    .wrapper {
+        width: 80%;
+        height: 85%;
+    }
+    .wrapper__left {
+        width: 50%;
+    }
+    .wrapper__right {
+        width: 50%;
+    }
 }
 
 @media only screen and (min-width:75em) {
-  .wrapper__right .form{
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-  }
+    .wrapper__right .form {
+        width: 90%;
+    }
 }

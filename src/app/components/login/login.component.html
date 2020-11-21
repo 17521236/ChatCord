@@ -1,88 +1,92 @@
-<div class="wrapper">
-  <div class="wrapper__left pl-4" style="background-color: #fafafa;">
-    <img class="wrapper_img" src="../assets/login.jpg" alt="no img">
-  </div>
+<div class="d-flex justify-content-center align-items-center h-100">
 
-  <div class="wrapper__right">
-    <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()" autocomplete="off">
+    <div class="wrapper">
+        <div class="wrapper__left pl-4" style="background-color: #fafafa;">
+            <img class="wrapper_img" src="../assets/login.jpg" alt="no img">
+        </div>
 
-      <div class="row">
-        <div class="col-12">
-          <div class="form-group sign-in">
-            <h2 class="display-5 text-center font-weight-bold">Sign In Now</h2>
-          </div>
-        </div>
-      </div>
+        <div class="wrapper__right">
+            <form class="form" [formGroup]="formGroup" (ngSubmit)="onSubmit()" autocomplete="off">
 
-      <div class="row">
-        <div class="col-12">
-          <div class="form-group">
-            <div class="avatar mx-auto" (click)="showModalAvatar()" [style.background-image]="'url('+SERVER_URL+'/'+formGroup.controls['avatarUrl'].value+')'"></div>
-          </div>
-        </div>
-      </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group sign-in">
+                            <h2 class="display-5 text-center font-weight-bold">Sign In Now</h2>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-        <div class="col-12">
-          <div class="form-group">
-            <div class="label">User Name</div>
-            <input name="username" class="form-control" formControlName="username">
-            <!-- validate -->
-            <div class="text-notification text-notification--error"
-              *ngIf="formGroup.controls['username'].invalid && formGroup.controls['username'].touched">
-              <span *ngIf="formGroup.controls['username'].errors.required">* Username is required</span>
-              <span *ngIf="formGroup.controls['username'].errors.minlength || formGroup.controls['username'].errors.maxlength">* Username is must be 6 - 20
-                character</span>
-              <span *ngIf="formGroup.controls['username'].errors.onlyWhitespace
-              && !formGroup.controls['username'].errors.minlength
-              && !formGroup.controls['username'].errors.required">* Username only white
-                space</span>
-            </div>
-            <!-- end validate -->
-          </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="avatar mx-auto" (click)="showModalAvatar()" [style.background-image]="'url('+SERVER_URL+'/'+formGroup.controls['avatarUrl'].value+')'"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="label">User Name</div>
+                            <input name="username" class="form-control" formControlName="username">
+                            <!-- validate -->
+                            <div class="text-notification text-notification--error" *ngIf="formGroup.controls['username'].invalid && formGroup.controls['username'].touched">
+                                <span *ngIf="formGroup.controls['username'].errors.required">* Username is required</span>
+                                <span *ngIf="formGroup.controls['username'].errors.minlength || formGroup.controls['username'].errors.maxlength">* Username is must be 6 - 20
+                  character</span>
+                                <span *ngIf="formGroup.controls['username'].errors.onlyWhitespace
+                && !formGroup.controls['username'].errors.minlength
+                && !formGroup.controls['username'].errors.required">* Username only white
+                  space</span>
+                            </div>
+                            <!-- end validate -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <div class="label">Room</div>
+                            <input name="room" class="form-control" formControlName="room">
+                            <!-- validate -->
+                            <div class="text-notification text-notification--error" *ngIf="formGroup.controls['room'].invalid && formGroup.controls['room'].touched">
+                                <span *ngIf="formGroup.controls['room'].errors?.required">* Room is required</span>
+                            </div>
+                            <!-- end validate -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-right mt-3">
+                        <button type="submit" class="btn btn-danger">Join Chat</button>
+                    </div>
+                </div>
+            </form>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="form-group">
-            <div class="label">Room</div>
-            <input name="room" class="form-control" formControlName="room">
-            <!-- validate -->
-            <div class="text-notification text-notification--error"
-              *ngIf="formGroup.controls['room'].invalid && formGroup.controls['room'].touched">
-              <span *ngIf="formGroup.controls['room'].errors?.required">* Room is required</span>
-            </div>
-            <!-- end validate -->
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 text-right mt-3">
-          <button type="submit" class="btn btn-danger">Join Chat</button>
-        </div>
-      </div>
-    </form>
-  </div>
+    </div>
+
 </div>
+
+
 <!-- Modal -->
 <div class="modal" tabindex="-1" #modal>
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Choose your avatar</h5>
-        <button type="button" class="close" (click)="hideModalAvatar()">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Choose your avatar</h5>
+                <button type="button" class="close" (click)="hideModalAvatar()">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-          <div class="row">
-            <div class="col-3 col-md-2" *ngFor="let icon of icons">
-              <div class="icon-item" [style.background-image]="'url('+SERVER_URL+'/'+icon.url+')'" (click)="chooseAvatar(icon.url)"></div>
             </div>
-          </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3 col-md-2" *ngFor="let icon of icons">
+                            <div class="icon-item" [style.background-image]="'url('+SERVER_URL+'/'+icon.url+')'" (click)="chooseAvatar(icon.url)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
