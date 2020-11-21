@@ -76,5 +76,6 @@ export class HomeComponent extends AppComponentBase implements OnInit {
     this.router.navigate(['/login']);
     this.socketIoService.sendData('client-user-logout', '');
   }
+
 }
 

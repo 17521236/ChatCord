@@ -1,74 +1,80 @@
 <div class="wrapper">
 
 
-  <!-- user-->
-  <div class="users">
-    <div class="header">Users in Room</div>
-    <div *ngFor="let user of room.users" class="user">
-      <span class="user__avatar" [style.background-image]="'url('+SERVER_URL+'/'+user.avatarUrl+')'"></span>
-      <span class="user__name">{{user?.username}}</span>
+    <!-- user-->
+    <div class="users">
+        <div class="header">Users in Room</div>
+        <div *ngFor="let user of room.users" class="user">
+            <span class="user__avatar" [style.background-image]="'url('+SERVER_URL+'/'+user.avatarUrl+')'"></span>
+            <span class="user__name">{{user?.username}}</span>
+        </div>
     </div>
-  </div>
-  <!-- end  user-->
+    <!-- end  user-->
 
-  <!-- chat container -->
-  <div class="chat-container">
+    <!-- chat container -->
+    <div class="chat-container">
 
-    <!-- room -->
-    <div class="room">
-      <div class="room__name font-weight-bold text-center mt-3">Room: {{room?.room}}</div>
-      <div class="room__des text-center "> {{room?.users.length}} people online</div>
-      <span class="room__logout" (click)="logout()">
+        <!-- room -->
+        <div class="room">
+            <div class="room__name font-weight-bold text-center mt-3">Room: {{room?.room}}</div>
+            <div class="room__des text-center "> {{room?.users.length}} people online</div>
+            <span class="room__logout" (click)="logout()">
         <!-- <i class='bx bx-log-out-circle'></i> -->
         <i class='bx bx-log-out'></i>
       </span>
-    </div>
-    <!-- end room-->
+        </div>
+        <!-- end room-->
 
-    <!-- all message -->
-    <div class="messages">
-      <div class="item-message"
-      *ngFor="let msg of allMsg; index as i"
-      [class]="msg.isMine?' is-mine':' is-another'"
-      [style.margin-top.rem]="allMsg[i-1]?.username !== msg.username ? 1 : 0.5"
-      >
-        <!-- avatar -->
-        <div [class]="allMsg[i-1]?.username !== msg.username?'item-message__avatar':'m-avatar'"
-        [style.background-image]="allMsg[i-1]?.username !== msg.username ? 'url('+SERVER_URL+'/'+msg.avatarUrl+')' : ''"
-        ></div>
-        <!-- message -->
-        <div class="message">
-          <div *ngIf="allMsg[i-1]?.username != msg.username" class="message-header"
-            [class]="msg.isMine?' text-white':''">
-            <!-- username -->
-            <span class="message-header__username">{{ msg.username !='* Bot *'? msg.username:'ChatCord'}}</span>
-            <span *ngIf="msg.username==='* Bot *'" class="message-header__bot">
+        <!-- all message -->
+        <div class="messages">
+            <div class="item-message" *ngFor="let msg of allMsg; index as i" [class]="msg.isMine?' is-mine':' is-another'" [style.margin-top.rem]="allMsg[i-1]?.username !== msg.username ? 1 : 0.5">
+                <!-- avatar -->
+                <div [class]="allMsg[i-1]?.username !== msg.username?'item-message__avatar':'m-avatar'" [style.background-image]="allMsg[i-1]?.username !== msg.username ? 'url('+SERVER_URL+'/'+msg.avatarUrl+')' : ''">
+                </div>
+                <!-- message -->
+                <div class="message">
+                    <div *ngIf="allMsg[i-1]?.username != msg.username" class="message-header" [class]="msg.isMine?' text-white':''">
+                        <!-- username -->
+                        <span class="message-header__username">{{ msg.username !='* Bot *'? msg.username:'ChatCord'}}</span>
+                        <span *ngIf="msg.username==='* Bot *'" class="message-header__bot">
               <i class='bx bx-check'></i>
               Bot
             </span>
-            <!-- end username -->
-            <!-- time -->
-            <span class="message-header__time"> {{msg.time}}</span>
-            <!-- end time -->
-          </div>
-          <!-- content -->
-          <div class="message-content"> {{msg.message}}</div>
-          <!-- end content -->
+                        <!-- end username -->
+                        <!-- time -->
+                        <span class="message-header__time"> {{msg.time}}</span>
+                        <!-- end time -->
+                    </div>
+                    <!-- content -->
+                    <div class="message-content"> {{msg.message}}</div>
+                    <!-- end content -->
+                </div>
+            </div>
+
         </div>
-      </div>
+
+        <!-- input -->
+        <form class="chat__input" [formGroup]="formMsg" (ngSubmit)="sendMessage()">
+            <input formControlName="message" class="form-control" placeholder="Enter your message...">
+            <div class="d-flex justify-content-center align-items-center btn-send" (click)="sendMessage()">
+                <i class='bx bxs-send'></i>
+            </div>
+            <button type="submit" hidden></button>
+        </form>
+        <!-- end input -->
 
     </div>
-
-    <!-- input -->
-    <form class="chat__input" [formGroup]="formMsg" (ngSubmit)="sendMessage()">
-      <input formControlName="message" class="form-control" placeholder="Enter your message...">
-      <div class="d-flex justify-content-center align-items-center btn-send" (click)="sendMessage()">
-        <i class='bx bxs-send'></i>
-      </div>
-      <button type="submit" hidden></button>
-    </form>
-    <!-- end input -->
-
-  </div>
-  <!-- end  chat messages -->
+    <!-- end  chat messages -->
 </div>
+
+<script>
+    function resetVh() {
+        let vh = window.innerHeight;
+        console.log('vh is: ', vh);
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    resetVh();
+    window.addEventListener('resize', () => {
+        resetVh();
+    })
+</script>
