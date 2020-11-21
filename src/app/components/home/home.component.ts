@@ -31,7 +31,6 @@ export class HomeComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listenUserLogout()
     this.listenMessageFromServer();
     this.listenAnotherPeopleJoin();
   }
@@ -51,11 +50,6 @@ export class HomeComponent extends AppComponentBase implements OnInit {
     });
   }
 
-  listenUserLogout(): void {
-    this.socketIoService.listenEvent('server-response-user-logout').subscribe(() => this.logout());
-  }
-
-
   // action in component
   sendMessage(): void {
     const myMsg = this.formMsg.controls.message.value;
@@ -74,7 +68,7 @@ export class HomeComponent extends AppComponentBase implements OnInit {
 
   logout(): void {
     this.router.navigate(['/login']);
-    this.socketIoService.sendData('client-user-logout', '');
+//    this.socketIoService.sendData('client-user-logout', '');
   }
 
 }

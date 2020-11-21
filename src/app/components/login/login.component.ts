@@ -1,9 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { IIcon } from 'src/app/models/message.model';
 import { NoWhitespaceValidator } from 'src/app/validators/no-white-space.validator';
-import { environment } from 'src/environments/environment';
 import { AppComponentBase } from 'src/shared/common/AppComponentBase/AppComponentBase.component';
 
 @Component({
@@ -20,7 +18,7 @@ export class LoginComponent extends AppComponentBase implements OnInit {
   icons: IIcon[] = [];
   isExist = false;
 
-  constructor(private injector: Injector, private http: HttpClient) {
+  constructor(private injector: Injector) {
     super(injector);
 
     this.formGroup = this.fb.group({
@@ -28,6 +26,9 @@ export class LoginComponent extends AppComponentBase implements OnInit {
       'room': ['', Validators.required],
       'avatarUrl': ['', Validators.required]
     });
+    if (this.socketIoService.testConnect()) {
+      window.location.reload();
+    }
     this.socketIoService.createConnect();
   }
 
@@ -54,8 +55,8 @@ export class LoginComponent extends AppComponentBase implements OnInit {
 
   onSubmit(): void {
     if (this.formGroup.controls['username'].value === '* Bot *'){
-this.message.danger('User name can\'t is "* Bot *"');
-return;
+      this.message.danger('User name can\'t is "* Bot *"');
+      return;
     }
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
