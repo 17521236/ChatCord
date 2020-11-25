@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, ElementRef, Injector, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { IMessageFromServer, IRoomInfo, IUser } from 'src/app/models/message.model';
 import { environment } from 'src/environments/environment';
@@ -12,11 +12,11 @@ import { AppComponentBase } from 'src/shared/common/AppComponentBase/AppComponen
 
 export class HomeComponent extends AppComponentBase implements OnInit {
 
-  // SERVER_URL = environment.SOCKET_ENDPOINT;
-  SERVER_URL='https://chatcord-api.herokuapp.com';
   formMsg: FormGroup;
   allMsg: IMessageFromServer[] = [];
   room: IRoomInfo = { room: '', users: [] };
+  isShowRoomInfo=false;
+  @ViewChild('inputMsg') inputMsg:ElementRef;
 
 
   constructor(private injector: Injector) {
@@ -31,8 +31,14 @@ export class HomeComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
+    this.listenLogout();
     this.listenMessageFromServer();
     this.listenAnotherPeopleJoin();
+  }
+
+  listenLogout(){
+    // use when user disconnect but not logout
+    this.socketIoService.listenEvent('server-response-user-logout').subscribe(res=> this.logout())
   }
 
   listenAnotherPeopleJoin(): void {
@@ -46,7 +52,9 @@ export class HomeComponent extends AppComponentBase implements OnInit {
       this.allMsg.push(res);
       // reset input filed
       setTimeout(() => this.scrollDown(), 30);
-      this.formMsg.controls.message.reset();
+      if(res.isMine){
+        this.formMsg.controls.message.reset();
+      }
     });
   }
 
@@ -56,9 +64,9 @@ export class HomeComponent extends AppComponentBase implements OnInit {
     if (!myMsg || myMsg === '') {
       return;
     }
-
     // send to server
     this.socketIoService.sendData('client-send-message', myMsg);
+    this.inputMsg.nativeElement.focus();
   }
 
   scrollDown(): void {
@@ -68,7 +76,13 @@ export class HomeComponent extends AppComponentBase implements OnInit {
 
   logout(): void {
     this.router.navigate(['/login']);
-//    this.socketIoService.sendData('client-user-logout', '');
+  }
+
+  showRoomInfo():void{
+    this.isShowRoomInfo=true;
+  }
+  hideRoomInfo():void{
+    this.isShowRoomInfo=false;
   }
 
 }

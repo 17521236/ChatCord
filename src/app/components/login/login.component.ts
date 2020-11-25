@@ -12,8 +12,6 @@ import { AppComponentBase } from 'src/shared/common/AppComponentBase/AppComponen
 export class LoginComponent extends AppComponentBase implements OnInit {
 
   @ViewChild('modal') modal: ElementRef;
-  // SERVER_URL = environment.SOCKET_ENDPOINT;
-  SERVER_URL = 'https://chatcord-api.herokuapp.com';
   formGroup: FormGroup;
   icons: IIcon[] = [];
   isExist = false;
@@ -49,13 +47,14 @@ export class LoginComponent extends AppComponentBase implements OnInit {
       this.message.danger('User name is existed !!!');
     });
     this.socketIoService.listenEvent('server-response-login-success').subscribe((res) => {
+      this.message.success('Wellcome')
       this.router.navigate(['/home']);
     });
   }
 
   onSubmit(): void {
     if (this.formGroup.controls['username'].value === '* Bot *'){
-      this.message.danger('User name can\'t is "* Bot *"');
+      this.message.danger('User name can\'t is * Bot *');
       return;
     }
     this.formGroup.markAllAsTouched();

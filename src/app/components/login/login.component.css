@@ -40,7 +40,7 @@
     cursor: pointer;
     width: 70px;
     height: 70px;
-    background-image: url('http://localhost:3000/icons/avatar/avatar1000.svg');
+    background-image: url('../../../assets/avatar_default.svg');
     background-position: center;
     background-size: cover;
 }
@@ -64,7 +64,7 @@
     height: 50px;
     background-position: center;
     background-size: cover;
-    background-image: url('http://localhost:3000/icons/avatar/avatar1000.svg');
+    background-image: url('../../../assets/avatar_default.svg');
     margin-bottom: 1rem;
     cursor: pointer;
     transition: transform 0.1s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -103,6 +103,7 @@
         width: 60%;
         display: flex;
         align-items: center;
+        justify-content: center;
     }
     .wrapper__right .form {
         width: 100%;
@@ -125,8 +126,14 @@
     }
 }
 
-@media only screen and (min-width:75em) {
+@media only screen and (min-width:85em) {
     .wrapper__right .form {
-        width: 90%;
+        width: 85%;
+    }
+}
+
+@media only screen and (min-width:120em) {
+    .wrapper__right .form {
+        width: 70%;
     }
 }

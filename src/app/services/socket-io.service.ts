@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
 export class SocketIoService {
   socket: any;
   SERVER_URL=environment.SOCKET_ENDPOINT;
-  //SERVER_URL='https://chatcord-api.herokuapp.com';
   constructor() { }
 
   createConnect(): void {

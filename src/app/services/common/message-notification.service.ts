@@ -10,31 +10,32 @@ export class MessageNotificationService {
   isShow = false;
   messageType: MessageType;
   countDown: any;
+  timeout=3000;
 
   constructor() { }
 
-  setInfo(message: string): void {
+  setInfo(...args: [message: string, timeout?: number]): void {
     if (this.countDown) {
       clearTimeout(this.countDown);
     }
-    this.msg = message;
+    this.msg = args[0];
     this.isShow = true;
-    this.countDown = setTimeout(() => this.hide(), 3000);
+    this.countDown = setTimeout(() => this.hide(),args[1]?args[1]:this.timeout);
   }
 
-  success(message: string): void {
+  success(...args:[message: string,timeout?:number]): void {
     this.messageType = MessageType.success;
-    this.setInfo(message);
+    this.setInfo(args[0],args[1]?args[1]:this.timeout);
   }
 
-  danger(message: string): void {
+  danger(...args:[message: string,timeout?:number]): void {
     this.messageType = MessageType.danger;
-    this.setInfo(message);
+    this.setInfo(args[0],args[1]?args[1]:this.timeout);
   }
 
-  info(message: string): void {
+  info(...args:[message: string,timeout?:number]): void {
     this.messageType = MessageType.info;
-    this.setInfo(message);
+    this.setInfo(args[0],args[1]?args[1]:this.timeout);
   }
 
   hide(): void {

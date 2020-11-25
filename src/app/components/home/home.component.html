@@ -1,9 +1,12 @@
 <div class="d-flex justify-content-center align-items-center h-100">
 
     <div class="wrapper">
+        <div class="overlay" [class]="isShowRoomInfo?'overlay--show':''" (click)="hideRoomInfo()"> </div>
         <!-- user-->
-        <div class="users">
-            <div class="header">Users in Room</div>
+        <div class="users" [style.left.%]="isShowRoomInfo?'0':'-100'">
+            <div class="header">Users in Room
+                <i class='bx bx-x' (click)="hideRoomInfo()"></i>
+            </div>
             <div *ngFor="let user of room.users" class="user">
                 <span class="user__avatar" [style.background-image]="'url('+SERVER_URL+'/'+user.avatarUrl+')'"></span>
                 <span class="user__name">{{user?.username}}</span>
@@ -16,6 +19,9 @@
 
             <!-- room -->
             <div class="room">
+                <span class="room__info" (click)="showRoomInfo()">
+          <i class='bx bx-menu'></i>
+        </span>
                 <div class="room__name font-weight-bold text-center mt-3">Room: {{room?.room}}</div>
                 <div class="room__des text-center "> {{room?.users.length}} people online</div>
                 <span class="room__logout" (click)="logout()">
@@ -55,7 +61,7 @@
 
             <!-- input -->
             <form class="chat__input" [formGroup]="formMsg" (ngSubmit)="sendMessage()">
-                <input formControlName="message" class="form-control" placeholder="Enter your message...">
+                <input #inputMsg formControlName="message" class="form-control" placeholder="Enter your message...">
                 <div class="d-flex justify-content-center align-items-center btn-send" (click)="sendMessage()">
                     <i class='bx bxs-send'></i>
                 </div>
