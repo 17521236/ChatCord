@@ -4,7 +4,8 @@ Realtime chat app with websockets using Node.js, Express and Socket.io with Angu
 
 ## Working application
 
--  Live demo: [Chat Cord](https://chat-cord.vercel.app)
+- Live demo: [Chat Cord](https://chat-cord.vercel.app)
+- Backend: [Chat Cord Server](https://github.com/17521236/ChatCord-api)
 
 ## Visuals
 
